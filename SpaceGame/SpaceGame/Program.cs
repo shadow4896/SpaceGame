@@ -2,14 +2,15 @@
 
 namespace SpaceGame
 {
-
-    public enum SpaceShips {StarFighter, SalvageHauler, Frigate};
-    public class ship
+    class program
     {
-        int capacity;
-        int speed;
+        static void Main(string[] args)
+        {
 
-
+        }
     }
+
+    
+    
     
 }
