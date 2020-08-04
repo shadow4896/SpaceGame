@@ -5,7 +5,7 @@ Have at least 5 planets to which the player can travel
 Player at start of game should be 18 years old and have a ship (or ability to gain a ship) and a small amount of starting currency (credits)
 Game ends when the player reaches the game goal or ages to 60yo
 
-Primary goal of the game is amass wealth by trading goods and services among plantets
+Primary goal of the game is amass wealth by trading goods and services among planets
 
 You write the story
 Your game should have a "good", "bad" ending, optionally a separate "age out" ending
