@@ -6,7 +6,7 @@ namespace SpaceGame
 {
     public enum SpaceShips { StarFighter, SalvageHauler, Frigate };
 
-    public class ship
+    public class Ship
     {
         int capacity;
         int speed;

@@ -6,11 +6,16 @@ namespace SpaceGame
 { 
     public enum PlanetSystem { Earth, AlphaProxima1, Mars, Venus, Jupitor };
 
-    class Planets
+    public class Planet
     {
-        public decimal distance;
-        public string planetName;
+        public string name;
 
+        public List<Goods> Goods =  new List<Goods>();
 
+        public Planet(string name, List<Goods> goods)
+        {
+            this.name = name;
+            Goods = goods;
+        }
     }
 }
