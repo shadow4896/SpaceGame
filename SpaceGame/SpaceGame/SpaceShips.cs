@@ -8,8 +8,8 @@ namespace SpaceGame
 
     public class Ship
     {
-        int capacity;
-        int speed;
+        public int capacity;
+        public int speed;
 
     }
-}
+  }
