@@ -16,6 +16,8 @@ namespace SpaceGame
         {
             this.name = name;
             Goods = goods;
+            
         }
+
     }
 }
