@@ -68,10 +68,12 @@ namespace SpaceGame
             Console.Clear();
 
             Console.WriteLine("Please select a ship to start off your journey \n1. StarFighter (Speed : Warp 3, Capacity: 1000lbs)\n2. SalvageHauler (Speed : Warp 2, Capacity: 2500lbs)\n3. Frigate (Speed : Warp 1, Capacity: 5000lbs)\n");
+            ShipChoice();
         }
-        private bool GetUserInput(ConsoleKey key)
+        public ConsoleKey ShipChoice()
         {
-                        
+            var key = Console.ReadKey().Key;
+
             switch (key)
             {
                 case ConsoleKey.D1:
@@ -84,19 +86,14 @@ namespace SpaceGame
                     Console.WriteLine("Frigate it is");
                     break;
                 case ConsoleKey.Q:
-                    return true;
+                    break;
             }
-            return false;
+            return Console.ReadKey().Key;
         }
 
+        private object GetInputFromUser()
+        {
+            throw new NotImplementedException();
+        }
     }
-
-
-
-
-
-
-   
-        
-    
 }
