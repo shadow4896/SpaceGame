@@ -6,15 +6,16 @@ using System.Text;
 
 namespace SpaceGame
 {
-
-
-
     public class Goods
     {
 
         public string name;
         public int cost;
         public int weight;
+
+        public Goods()
+        {
+        }
 
         public Goods(string name, int cost, int weight)
         {
@@ -23,10 +24,4 @@ namespace SpaceGame
             this.weight = weight;
         }
     }
-
-
-
-
-
-
 }

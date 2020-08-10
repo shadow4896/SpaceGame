@@ -70,59 +70,155 @@ namespace SpaceGame
 
             Console.WriteLine("Please select a ship to start off your journey \n\n1. StarFighter (Speed : Warp 3, Capacity: 1000lbs)\n2. SalvageHauler (Speed : Warp 2, Capacity: 2500lbs)\n3. Frigate (Speed : Warp 1, Capacity: 5000lbs)\n");
 
-            ShipChoice();
+            var ship = ShipChoice();
             Console.Clear();
 
 
             Console.WriteLine($"In order to make money, you must first sell and trade goods.  {userName}, select your initial inventory of goods.  Keep in mind, your ship has a max capacity.");
             Console.ReadLine();
 
-            Console.WriteLine("Select from the following choices:\n\n1. Food\n2. Andriod\n3. Weapons\n4. Entertainment\n5. Oil");
-            Supply();
+            Supply(ship);
         }
-        private ConsoleKey ShipChoice()
+        private Ship ShipChoice()
         {
             var key = Console.ReadKey().Key;
+            var ship = new Ship();
 
             switch (key)
             {
                 case ConsoleKey.D1:
                     Console.WriteLine("\nStarFigher it is, I guess speed and not capacity is your thing!");
+                    ship.spaceShips = SpaceShips.StarFighter;
+                    ship.capacity = 1000;
+                    ship.speed = 3;
                     break;
                 case ConsoleKey.D2:
                     Console.WriteLine("\nSalvageHauler it is, average ship for an average person!");
+                    ship.spaceShips = SpaceShips.SalvageHauler;
+                    ship.capacity = 2500;
+                    ship.speed = 2;
                     break;
                 case ConsoleKey.D3:
                     Console.WriteLine("\nFrigate it is, slow and steady wins the race!!!!");
+                    ship.spaceShips = SpaceShips.Frigate;
+                    ship.capacity = 5000;
+                    ship.speed = 1;
                     break;
                 case ConsoleKey.Q:
                     break;
             }
-            return Console.ReadKey().Key;
+
+            AnyKey();
+
+            return ship;
         }
 
-        public ConsoleKey Supply()
+        private void AnyKey()
         {
-            var key = Console.ReadKey().Key;
+            Console.WriteLine("\n\nPress any key to continue...");
+            Console.ReadKey(true);
+        }
 
-            switch (key)
+        public void Supply(Ship ship)
+        {
+            bool doneTrading = false;
+
+            // While we're not done trading
+            while (!doneTrading)
             {
-                case ConsoleKey.D1:
-                    Console.WriteLine("How many pallets of food?");
+                Console.Clear();
+                Console.WriteLine($"Available capacity: {ship.capacity - ship.productsInHold()}lbs");
+                Console.WriteLine("Select from the following choices:\n\n1. Food\n2. Andriod\n3. Weapons\n4. Entertainment\n5. Oil\n6. Done trading");
+
+                // Loop in either case until the user enters valid input
+                // Accept an item to buy
+                bool done = false;
+                int chosenItem = 0;
+                int numToBuy = 0;
+
+                Goods good = new Goods();
+
+                while (!done)
+                {
+                    var key = Console.ReadKey().Key;
                     Console.WriteLine();
-                    break;
-                case ConsoleKey.D2:
-                    Console.WriteLine("");
-                    break;
-                case ConsoleKey.D3:
-                    Console.WriteLine("\nFrigate it is, slow and steady wins the race!!!!\nIn order to make money, you must first sell and trade goods.  Please select your initial inventory of goods.  Keep in mind, your ship has a max capacity of 5000 lbs");
-                    break;
-                case ConsoleKey.D4:
-                    break;
-                case ConsoleKey.D5:
-                    break;
+
+                    done = true;
+
+                    switch (key)
+                    {
+                        case ConsoleKey.D1:
+                            good.name = "pallets of food";
+                            good.cost = 3;
+                            good.weight = 5;
+                            break;
+                        case ConsoleKey.D2:
+                            good.name = "andriods";
+                            good.cost = 1;
+                            good.weight = 1;
+                            break;
+                        case ConsoleKey.D3:
+                            good.name = "weapon crates?";
+                            good.cost = 1;
+                            good.weight = 1;
+                            break;
+                        case ConsoleKey.D4:
+                            good.name = "entertainment";
+                            good.cost = 1;
+                            good.weight = 1;
+                            break;
+                        case ConsoleKey.D5:
+                            good.name = "barrels of oil";
+                            good.cost = 1;
+                            good.weight = 1;
+                            break;
+                        case ConsoleKey.D6:
+                            doneTrading = true;
+                            break;
+                        default:
+                            done = false;
+                            break;
+                    }
+
+                    if (!done && !doneTrading)
+                    {
+                        Console.WriteLine("\nInvalid choice. Try again.");
+                    }
+                }
+
+                if (doneTrading) continue;
+
+                // Accept a # of the chosen item to purchase
+                done = false;
+
+                while (!done)
+                {
+                    Console.Write($"How many {good.name}? ");
+
+                    try
+                    {
+                        numToBuy = int.Parse(Console.ReadLine());
+
+                        if (good.weight * numToBuy + ship.productsInHold() > ship.capacity)
+                        {
+                            Console.WriteLine($"Puchasing that many {good.name} will overload your ship. Try buying less.");
+                            continue;
+                        }
+
+                        done = true;
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Invalid input. Try again.");
+                    }
+                }
+
+                // We have a valid item to purchase and a valid quantity of that item.
+                Console.WriteLine($"Purchasing {numToBuy} of item {chosenItem}");
+
+                // Add the item to the inventory
+                ship.hold.Add((good, numToBuy));
             }
-            return Console.ReadKey().Key;
         }
     }
 }
