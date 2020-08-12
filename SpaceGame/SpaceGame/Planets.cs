@@ -43,6 +43,9 @@ namespace SpaceGame
 
         public static double WarpToLightYearsPer(double warp) => Math.Pow(warp, (10.0 / 3)) + Math.Pow((10 - warp), (-11.0 / 3));
 
+
+
+
     }
 
     

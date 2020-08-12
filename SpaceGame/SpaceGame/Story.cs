@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Transactions;
 
 namespace SpaceGame
 {
@@ -86,6 +87,8 @@ namespace SpaceGame
             Supply(player.ship);
 
             Location(player);
+
+            Console.WriteLine($"Welcome to {player.location.name} ");
 
         }
         private Ship ShipChoice()
@@ -230,38 +233,58 @@ namespace SpaceGame
             }
         }
 
-        public ConsoleKey Location(Player player)
+        public void Location(Player player)
         {
-            var key = Console.ReadKey().Key;
+            bool done;
 
-            Console.WriteLine(" Where would you like your first destination to be?  Please select wisely, your life depends on it!!\n1. Mars\n2. Venus\n3. Jupiter\n4. Alpha Proximal 1\n5. Earth ");
-
-            switch (key)
+            do
             {
-                case ConsoleKey.D1:
-                    Console.WriteLine("\nMars it is!");
-                    player.TravelTo(planets[0]);
-                    break;
-                case ConsoleKey.D2:
-                    Console.WriteLine("\nVenus it is!");
-                    player.TravelTo(planets[2]);
-                    break;
-                case ConsoleKey.D3:
-                    Console.WriteLine("\nJupiter it is!");
-                    player.TravelTo(planets[3]);
-                    break;
-                case ConsoleKey.D4:
-                    Console.WriteLine("\nAlpha Proximal 1 it is!");
-                    player.TravelTo(planets[4]);
-                    break;
-                case ConsoleKey.D5:
-                    Console.WriteLine("\nEarth it is!");
-                    player.TravelTo(planets[1]);
-                    break;
-            }
-            AnyKey();
+                done = true;
+                Console.Clear();
 
-            return key;
+                Console.WriteLine(" Where would you like your first destination to be?  Please select wisely, your life depends on it!!\n1. Mars\n2. Venus\n3. Jupiter\n4. Alpha Proximal 1\n5. Earth ");
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.D1:
+                        Console.WriteLine("\nMars it is!");
+                        player.TravelTo(planets[0]);
+                        break;
+                    case ConsoleKey.D2:
+                        Console.WriteLine("\nVenus it is!");
+                        player.TravelTo(planets[2]);
+                        break;
+                    case ConsoleKey.D3:
+                        Console.WriteLine("\nJupiter it is!");
+                        player.TravelTo(planets[3]);
+                        break;
+                    case ConsoleKey.D4:
+                        Console.WriteLine("\nAlpha Proximal 1 it is!");
+                        player.TravelTo(planets[4]);
+                        break;
+                    case ConsoleKey.D5:
+                        Console.WriteLine("\nEarth it is!");
+                        player.TravelTo(planets[1]);
+                        break;
+                    default:
+                        done = false;
+                        break;
+                }
+            } while (!done);
+
+            AnyKey();
         }
+
+
+        //public void PrintLocationAndDistances()
+        //{
+        //    for (int i = 0; i < location.Count; ++i)
+        //    {
+        //        Planet destination = location[i];
+        //        var distance = player.location.DistanceTo(otherPlanet);
+        //        Console.Write($"-");
+        //    }
+        //}
     }
 }

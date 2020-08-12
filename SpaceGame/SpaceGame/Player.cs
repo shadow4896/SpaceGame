@@ -34,10 +34,7 @@ namespace SpaceGame
 
             ship.TravelTo(otherPlanet);
         }
-    
-         
-
-
+       
        
         
     }
