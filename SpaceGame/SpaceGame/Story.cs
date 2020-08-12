@@ -12,7 +12,7 @@ namespace SpaceGame
 
         public Story()
         {
-            Planet mars = new Planet("Mars", new List<Goods> { new Goods("Food", 5, 20),
+            Planet mars = new Planet("Mars", 0, 5, new List<Goods> { new Goods("Food", 5, 20),
                                                                new Goods("Android", 20, 50),
                                                                new Goods("Weapons", 100, 100),
                                                                new Goods("Entertainment", 10, 5),
@@ -20,7 +20,7 @@ namespace SpaceGame
 
             planets.Add(mars);
 
-            Planet earth = new Planet("Earth", new List<Goods>
+            Planet earth = new Planet("Earth", 0, 0, new List<Goods>
                                                               {new Goods("Food", 5, 20),
                                                                new Goods("Android", 20, 50),
                                                                new Goods("Weapons", 100, 100),
@@ -29,7 +29,7 @@ namespace SpaceGame
 
             planets.Add(earth);
 
-            Planet venus = new Planet("Venus", new List<Goods>
+            Planet venus = new Planet("Venus", 5, 0, new List<Goods>
                                                               {new Goods("Food", 5, 20),
                                                                new Goods("Android", 20, 50),
                                                                new Goods("Weapons", 100, 100),
@@ -38,7 +38,7 @@ namespace SpaceGame
 
             planets.Add(venus);
 
-            Planet jupiter = new Planet("Jupiter", new List<Goods>
+            Planet jupiter = new Planet("Jupiter", 7, 0, new List<Goods>
                                                               {new Goods("Food", 5, 20),
                                                                new Goods("Android", 20, 50),
                                                                new Goods("Weapons", 100, 100),
@@ -47,7 +47,7 @@ namespace SpaceGame
 
             planets.Add(jupiter);
 
-            Planet alphaProxima1 = new Planet("Alpha Proxima 1", new List<Goods>
+            Planet alphaProxima1 = new Planet("Alpha Proxima 1", 0, 4, new List<Goods>
                                                               {new Goods("Food", 5, 20),
                                                                new Goods("Android", 20, 50),
                                                                new Goods("Weapons", 100, 100),
@@ -63,26 +63,35 @@ namespace SpaceGame
             Console.WriteLine("Welcome to Get Rich or Die Trying\n---------------------------------\n\nPlease enter your characters name : ");
             userName = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine($"\nHello {userName}, are you ready to get money or die trying? \n\nThe object of this game is to accumulate wealth as fast and efficiently as possible.\n");
+            Console.WriteLine($"\nHello {userName}, are you ready to get rich or die trying? \n\nThe object of this game is to accumulate wealth as fast and efficiently as possible.\n");
             Console.WriteLine("You are 18 years old and have 42 years to obtain your fortune by traveling from planet to planet selling and acquiring goods.");
             Console.ReadLine();
             Console.Clear();
 
             Console.WriteLine("Please select a ship to start off your journey \n\n1. StarFighter (Speed : Warp 3, Capacity: 1000lbs)\n2. SalvageHauler (Speed : Warp 2, Capacity: 2500lbs)\n3. Frigate (Speed : Warp 1, Capacity: 5000lbs)\n");
 
-            var ship = ShipChoice();
+            Player player;
+
+            {
+                var ship = ShipChoice();
+                player = new Player(ship.currentPlanet, ship);
+            }
+
             Console.Clear();
 
 
             Console.WriteLine($"In order to make money, you must first sell and trade goods.  {userName}, select your initial inventory of goods.  Keep in mind, your ship has a max capacity.");
             Console.ReadLine();
 
-            Supply(ship);
+            Supply(player.ship);
+
+            Location(player);
+
         }
         private Ship ShipChoice()
         {
             var key = Console.ReadKey().Key;
-            var ship = new Ship();
+            var ship = new Ship(planets[1]);
 
             switch (key)
             {
@@ -149,28 +158,28 @@ namespace SpaceGame
                     {
                         case ConsoleKey.D1:
                             good.name = "pallets of food";
-                            good.cost = 3;
-                            good.weight = 5;
+                            good.cost = 5;
+                            good.weight = 20;
                             break;
                         case ConsoleKey.D2:
                             good.name = "andriods";
-                            good.cost = 1;
-                            good.weight = 1;
+                            good.cost = 20;
+                            good.weight = 50;
                             break;
                         case ConsoleKey.D3:
                             good.name = "weapon crates?";
-                            good.cost = 1;
-                            good.weight = 1;
+                            good.cost = 100;
+                            good.weight = 100;
                             break;
                         case ConsoleKey.D4:
                             good.name = "entertainment";
-                            good.cost = 1;
-                            good.weight = 1;
+                            good.cost = 10;
+                            good.weight = 5;
                             break;
                         case ConsoleKey.D5:
                             good.name = "barrels of oil";
-                            good.cost = 1;
-                            good.weight = 1;
+                            good.cost = 100;
+                            good.weight = 200;
                             break;
                         case ConsoleKey.D6:
                             doneTrading = true;
@@ -219,6 +228,40 @@ namespace SpaceGame
                 // Add the item to the inventory
                 ship.hold.Add((good, numToBuy));
             }
+        }
+
+        public ConsoleKey Location(Player player)
+        {
+            var key = Console.ReadKey().Key;
+
+            Console.WriteLine(" Where would you like your first destination to be?  Please select wisely, your life depends on it!!\n1. Mars\n2. Venus\n3. Jupiter\n4. Alpha Proximal 1\n5. Earth ");
+
+            switch (key)
+            {
+                case ConsoleKey.D1:
+                    Console.WriteLine("\nMars it is!");
+                    player.TravelTo(planets[0]);
+                    break;
+                case ConsoleKey.D2:
+                    Console.WriteLine("\nVenus it is!");
+                    player.TravelTo(planets[2]);
+                    break;
+                case ConsoleKey.D3:
+                    Console.WriteLine("\nJupiter it is!");
+                    player.TravelTo(planets[3]);
+                    break;
+                case ConsoleKey.D4:
+                    Console.WriteLine("\nAlpha Proximal 1 it is!");
+                    player.TravelTo(planets[4]);
+                    break;
+                case ConsoleKey.D5:
+                    Console.WriteLine("\nEarth it is!");
+                    player.TravelTo(planets[1]);
+                    break;
+            }
+            AnyKey();
+
+            return key;
         }
     }
 }
