@@ -65,7 +65,7 @@ namespace SpaceGame
             userName = Console.ReadLine();
             Console.Clear();
             Console.WriteLine($"\nHello {userName}, are you ready to get rich or die trying? \n\nThe object of this game is to accumulate wealth as fast and efficiently as possible.\n");
-            Console.WriteLine("You are 18 years old and have 42 years to obtain your fortune by traveling from planet to planet selling and acquiring goods.");
+            Console.WriteLine("You are 18 years old and have 42 years to obtain your fortune by traveling from planet to \nplanet selling and acquiring goods.");
             Console.ReadLine();
             Console.Clear();
 
@@ -81,15 +81,18 @@ namespace SpaceGame
             Console.Clear();
 
 
-            Console.WriteLine($"In order to make money, you must first sell and trade goods.  {userName}, select your initial inventory of goods.  Keep in mind, your ship has a max capacity.");
+            Console.WriteLine($"In order to make money, you must first sell and trade goods.  \n{userName}, select your initial inventory of goods.  Keep in mind, your ship has a max capacity.");
             Console.ReadLine();
 
             Supply(player.ship);
-
+            
             Location(player);
 
-            Console.WriteLine($"Welcome to {player.location.name} ");
-
+            Console.Clear();
+            Console.WriteLine($"You are now {player.age:f2}");
+            Console.WriteLine($"Welcome to {player.location.name}! ");
+            Console.WriteLine("Sell your ship inventory and get back to earth to restock.  \nProblem is, they might not want what you have.  Please select goods to trade or sell.");
+            Console.WriteLine("\n\n1. Food\n2. Andriod\n3. Weapons\n4. Entertainment\n5. Oil");
         }
         private Ship ShipChoice()
         {
