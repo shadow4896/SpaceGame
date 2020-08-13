@@ -85,12 +85,19 @@ namespace SpaceGame
             Console.ReadLine();
 
             Supply(player.ship);
-            
+
             Location(player);
 
             Console.Clear();
             Console.WriteLine($"You are now {player.age:f2}");
-            Console.WriteLine($"Welcome to {player.location.name}! ");
+            Console.WriteLine($"Welcome to {player.location.name}! You currently have {player.gold} gold coins.");
+            Console.WriteLine($"Your current inventory is:");
+
+            foreach (var (good, count) in player.ship.hold)
+            {
+                Console.WriteLine($"\t{good.name} - {count}");
+            }
+
             Console.WriteLine("Sell your ship inventory and get back to earth to restock.  \nProblem is, they might not want what you have.  Please select goods to trade or sell.");
             Console.WriteLine("\n\n1. Food\n2. Andriod\n3. Weapons\n4. Entertainment\n5. Oil");
         }
